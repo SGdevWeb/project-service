@@ -1,6 +1,15 @@
 # project-service
 
+## Config .env
 
+SERVER_PORT= 8020
+
+TEST_SERVICE_ADDRESS="http://localhost:7990"
+USER_SERVICE_ADDRESS="http://localhost:8010"
+PROJECT_SERVICE_ADDRESS="http://localhost:8020"
+MEDIA_SERVICE_ADDRESS="http://localhost:8030"
+
+DB_URL="mongodb://127.0.0.1:27017/project_service_database"
 
 ## Getting started
 
