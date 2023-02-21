@@ -28,7 +28,6 @@ mongoose.connect(db_URL,{
     process.exit();
 });
 
-
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log('serveur run on port '+ port);
 });

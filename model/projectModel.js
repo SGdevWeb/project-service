@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-//schama de la data des collections
+//schema de la data des collections
 const projectSchema = mongoose.Schema({
     id: Number,
     uuid: String,
