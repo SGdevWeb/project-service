@@ -1,5 +1,5 @@
-const create = require("./base/createDto")
+const project = require("./projectDto")
 
 module.exports = {
-    create,
+    project,
 }
