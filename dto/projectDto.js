@@ -8,6 +8,7 @@ module.exports.create = (req, res, next) => {
         date_start: Joi.date().iso(),
         date_end : Joi.date().iso(),
         description : Joi.string().required().max(255),
+        //type : Joi.string().required().length(32),
     });
     schemaValidator(req, joiCreateProject, next);
 }
