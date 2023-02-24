@@ -8,7 +8,9 @@ const projectSchema = mongoose.Schema({
     date_end: { type: Date },
     description: String,
     // type : { type: mongoose.Schema.Types.String, ref: 'type' }
-    role_project : [{ type: mongoose.Schema.Types.String, ref: 'role_project' }]
+    users: [
+        { type: mongoose.Schema.Types.ObjectId, ref: 'role_project' }
+    ]
 });
 
 //nom de la collection  = nom du model+s exemple nom du model : project, nom de la collections : projects
