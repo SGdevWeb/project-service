@@ -1,9 +1,8 @@
 const projectModel = require("../model/projectModel");
 
 const { v4: uuidv4 } = require('uuid');
-const { roleProject } = require("./services");
 const roleProjectModel = require("../model/roleProjectModel");
-const { mongo, default: mongoose } = require("mongoose");
+const { default: mongoose } = require("mongoose");
 
 const create = async ({ name, date_start, date_end, description, uuid_user }) => {
 
