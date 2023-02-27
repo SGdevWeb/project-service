@@ -6,6 +6,8 @@ const helmet = require("helmet");
 const mongoose = require("mongoose");
 require('dotenv').config();
 
+const commentRoutes = require('./route/commentRoutes')
+
 const port = process.env.SERVER_PORT;
 
 app.use(cors());
@@ -27,6 +29,8 @@ mongoose.connect(db_URL,{
     console.log('Could not connect to the database. Error...', err);
     process.exit();
 });
+
+app.use("/comments", commentRoutes)
 
 app.listen(port, () => {
     console.log('serveur run on port '+ port);
