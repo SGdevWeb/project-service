@@ -19,7 +19,7 @@ const create = async ({ name, date_start, date_end, description, uuid_user }) =>
 
     const newRoleProject = new roleProjectModel({
         _id: objectIdRoleProject,
-        uuid_project: newProject._id,
+        uuid_project: newProject.uuid,
         uuid_user,
         owner: true,
         collaborator: false,
