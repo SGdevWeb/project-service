@@ -1,49 +1,37 @@
 const projectModel = require("../model/projectModel");
 
-const { v4: uuidv4 } = require("uuid");
+const { v4: uuidv4 } = require('uuid');
+const roleProjectModel = require("../model/roleProjectModel");
+const { default: mongoose } = require("mongoose");
 
-const create = async (data) => {
-  //recuperation de chaque donnée (traitement qi besoin)
-  const { name, date_start, date_end, description } = data;
+const create = async ({ name, date_start, date_end, description, uuid_user }) => {
 
-  //creation d'un object d'instance model user avec les infos que l'on as besoin
-  const project = new projectModel({
-    uuid: uuidv4(),
-    name,
-    date_start,
-    date_end,
-    description,
-  });
+    const objectIdRoleProject = new mongoose.Types.ObjectId();
 
-  try {
-    await project.save();
-    return { succes: project };
-  } catch (error) {
-    return error;
-  }
-};
+    const newProject = new projectModel({
+        uuid: uuidv4(),
+        name,
+        date_start,
+        date_end,
+        description,
+        users: [objectIdRoleProject],
+    });
 
-//1) Update par rapport aux utilisateurs.
+    const newRoleProject = new roleProjectModel({
+        _id: objectIdRoleProject,
+        uuid_project: newProject._id,
+        uuid_user,
+        owner: true,
+        collaborator: false,
+    });
 
-const update = async (uuid, data) => {
-  try {
-    const project = await projectModel.findOne({ uuid });
-
-    if (!project) {
-      throw new Error("Project not found");
+    try {
+        await newRoleProject.save();
+        const project = await newProject.save();
+        return { success: project };
+    } catch (error) {
+        return { error };
     }
-
-    project.name = data.name;
-    project.date_start = data.date_start;
-    project.date_end = data.date_end;
-    project.description = data.description;
-
-    await project.save();
-
-    return { success: project };
-  } catch (error) {
-    return error;
-  }
 };
 
 module.exports = {

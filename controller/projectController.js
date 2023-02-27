@@ -1,11 +1,15 @@
+const projectModel = require('../model/projectModel');
 const service = require('../service/services');
 
 const create = async (req, res) => {
-    const project = await service.project.create(req.body);
-    return project.error ?
-        res.status(400).json({ error: project.error }) :
-        res.status(201).json({ result: project });
-}
+    try {
+        const newProject = await service.project.create({ ...req.body, uuid_user: req.body.user.userId });
+        if (newProject.error) throw newProject.error;
+        return res.status(201).json({ success: newProject.success });
+    } catch (error) {
+        res.status(400).json(error);
+    }
+};
 
 const update = async (req, res) => {
     const uuid = req.params.uuid;
