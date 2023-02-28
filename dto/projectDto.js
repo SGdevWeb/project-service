@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const schemaValidator = require('../middleware/shemaValidatorMiddleware');
+const schemaValidator = require('../middleware/schemaValidatorMiddleware');
 
 //shema de de verification des donner en entré de la route
 const create = (req, res, next) => {
