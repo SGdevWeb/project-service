@@ -1,4 +1,5 @@
 const Comment = require('../model/commentModel');
+const commentServices = require('../service/commentService')
 
 const postComment = async (req, res) => {
     console.log(req.body)
@@ -6,6 +7,7 @@ const postComment = async (req, res) => {
     const newComment = new Comment({
         comment: req.body.comment,
         uuid_user: req.body.uuid_user
+        // uuid_projet: req.body.uuid_projet
     })
     
     newComment.save()
