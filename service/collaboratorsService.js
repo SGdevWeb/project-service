@@ -1,4 +1,4 @@
-const collaboratorsModel = require("../model/collaboratorsModel");
+const collaboratorsModel = require("../model/roleProjectModel");
 
 const { v4: uuidv4 } = require('uuid');
 
