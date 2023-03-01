@@ -1,11 +1,11 @@
 const service = require('../service/services');
 
 const create = async (req, res) => {
-    console.log('reqbody',req.body)
+    // console.log('reqbody',req.body)
     try {
         const { project_uuid, collaborators } = req.body;
 
-        console.log('controller in', project_uuid, collaborators)
+        // console.log('controller in', project_uuid, collaborators)
 
         const promises = collaborators.map(async (uuid_user) => {
             const newCollaborator = await service.collaborators.create({

@@ -6,7 +6,7 @@ const { default: mongoose } = require("mongoose");
 
 const create = async ({ uuid_project, uuid_user, owner, collaborator}) => {
 
-    console.log('service:', uuid_project, uuid_user, owner, collaborator)
+    // console.log('service:', uuid_project, uuid_user, owner, collaborator)
     try {
     const newRole = new collaboratorsModel({
       _id: mongoose.Types.ObjectId(),
