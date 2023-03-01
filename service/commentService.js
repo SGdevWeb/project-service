@@ -29,6 +29,16 @@ const getAll = async () => {
     }
 }
 
+const getByProjectId = async ({id}) => {
+    const comments = await Comment.find({uuid_project: id})
+    try {
+        if (comments.error) throw error
+        return { success: comments }
+    } catch(error) {
+        return { error }
+    }
+}
+
 const update = async ({comment, uuid_user, uuid}) => {
 
     const findedComment = await Comment.findOne({uuid})
@@ -49,4 +59,5 @@ module.exports = {
     create,
     getAll,
     update,
+    getByProjectId,
 }

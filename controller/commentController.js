@@ -25,6 +25,18 @@ const getAll = async (req, res) => {
     }
 }
 
+const getByProjectId = async (req, res) => {
+    console.log(req.params)
+
+    const comments = await services.comment.getByProjectId(req.params)
+    try {
+        if (comments.error) throw comments.error
+        return res.status(200).json(comments)
+    } catch(error) {
+        return res.status(500).json( error )
+    }
+}
+
 const update = async (req, res) => {
     // console.log('body controller', req.body)
 
@@ -41,4 +53,5 @@ module.exports = {
     create,
     getAll,
     update,
+    getByProjectId,
 }
