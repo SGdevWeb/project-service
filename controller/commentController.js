@@ -1,33 +1,44 @@
-const Comment = require('../model/commentModel');
-const commentServices = require('../service/commentService')
+const services = require('../service/services')
 
-const postComment = async (req, res) => {
-    console.log(req.body)
+const create = async (req, res) => {
+    // console.log(req.body)
 
-    const newComment = new Comment({
-        comment: req.body.comment,
-        uuid_user: req.body.uuid_user
-        // uuid_projet: req.body.uuid_projet
-    })
-    
-    newComment.save()
-        .then(() => res.status(201).json({ message: 'Commentaire enregistré' }))
-        .catch(error => res.status(500).json({ error }))
+    const newComment = await services.comment.create(req.body)
+    try {
+        console.log('try create commentController')
+        if (newComment.error) throw newComment.error
+        console.log('newComment', newComment)
+        return res.status(201).json(newComment)
+    } catch(error) {
+        return res.status(500).json( error )
+    }
 }
 
-const getAllComments = async (req, res) => {
-    console.log(req.body)
+const getAll = async (req, res) => {
 
-    Comment.find()
-        .then((response) => {   
-            res.status(200).json({ comments: response})
-        })
-        .catch(error => {
-            res.status(500).json({ error })
-        })
+    const allComments = await services.comment.getAll()
+    try {
+        if (allComments.error) throw allComments.error
+        return res.status(200).json(allComments)
+    } catch(error) {
+        return res.status(500).json( error )
+    }
+}
+
+const update = async (req, res) => {
+    // console.log('body controller', req.body)
+
+    const updatedComment = await services.comment.update(req.body)
+    try {
+        if (updatedComment.error) throw updatedComment.error
+        return res.status(200).json(updatedComment)
+    } catch(error) {
+        return res.status(500).json( error )
+    }
 }
 
 module.exports = {
-    postComment,
-    getAllComments
+    create,
+    getAll,
+    update,
 }

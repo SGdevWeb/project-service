@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const commentController = require('../controller/commentController')
+const controller = require('../controller/controller')
+const DTO = require('../dto/dtos')
 
-router.post("/post", commentController.postComment);
+router.post("/post", DTO.comment.post ,controller.comment.create);
 
-router.get("/", commentController.getAllComments)
+router.get("/", controller.comment.getAll)
+
+router.put("/comment", DTO.comment.update, controller.comment.update)
 
 module.exports = router;

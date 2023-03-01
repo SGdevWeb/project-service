@@ -7,7 +7,6 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 
 const routes = require("./route/routes");
-const commentRoutes = require('./route/commentRoutes')
 const port = process.env.SERVER_PORT;
 
 app.use(cors());
@@ -31,7 +30,6 @@ mongoose.connect(db_URL,{
 });
 
 app.use(routes);
-app.use("/comments", commentRoutes)
 
 app.listen(port, () => {
     console.log('Server run on port ' + port);
