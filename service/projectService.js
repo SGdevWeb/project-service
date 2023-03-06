@@ -34,6 +34,17 @@ const create = async ({ name, date_start, date_end, description, uuid_user }) =>
     }
 };
 
+const get = async (uuid) => {
+    try {
+        const project = await projectModel.findOne({uuid:uuid});
+        if (project == null) throw new Error("Projet introuvable");
+        return { success: project };
+    } catch (error) {
+        return { error };
+    }
+}
+
 module.exports = {
     create,
+    get,
 };

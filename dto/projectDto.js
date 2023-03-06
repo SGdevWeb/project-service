@@ -14,6 +14,19 @@ const create = (req, res, next) => {
     schemaValidator(req, joiCreateProject, next);
 }
 
+const get = (req, res, next) => {
+    const joiParams = Joi.object({
+      uuid: Joi.string().guid({ version: "uuidv4" }).required(),
+    });
+  
+    const { error: paramsError } = joiParams.validate(req.params);
+    if (paramsError) {
+      return res.status(400).json({ error: paramsError.details[0].message });
+    }
+    next();
+}
+
 module.exports = {
     create,
+    get,
 }
