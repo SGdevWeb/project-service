@@ -10,7 +10,6 @@ const create = async ({
   description,
   uuid_user,
 }) => {
-  const objectIdRoleProject = new mongoose.Types.ObjectId();
 
     const newProject = new projectModel({
         uuid: uuidv4(),
