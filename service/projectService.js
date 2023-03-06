@@ -2,11 +2,8 @@ const projectModel = require("../model/projectModel");
 
 const { v4: uuidv4 } = require('uuid');
 const roleProjectModel = require("../model/roleProjectModel");
-const { default: mongoose } = require("mongoose");
 
 const create = async ({ name, date_start, date_end, description, uuid_user }) => {
-
-    const objectIdRoleProject = new mongoose.Types.ObjectId();
 
     const newProject = new projectModel({
         uuid: uuidv4(),
@@ -14,11 +11,9 @@ const create = async ({ name, date_start, date_end, description, uuid_user }) =>
         date_start,
         date_end,
         description,
-        users: [objectIdRoleProject],
     });
 
     const newRoleProject = new roleProjectModel({
-        _id: objectIdRoleProject,
         uuid_project: newProject.uuid,
         uuid_user,
         owner: true,

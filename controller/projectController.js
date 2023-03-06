@@ -1,4 +1,3 @@
-const projectModel = require('../model/projectModel');
 const service = require('../service/services');
 
 const create = async (req, res) => {
