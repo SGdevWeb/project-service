@@ -27,8 +27,8 @@ const getAll = async () => {
   }
 };
 
-const getByProjectId = async ({ id }) => {
-  const comments = await Comment.find({ uuid_project: id });
+const getByProjectId = async ({ uuid }) => {
+  const comments = await Comment.find({ uuid_project: uuid });
   try {
     if (comments.error) throw error;
     return { success: comments };
@@ -52,9 +52,41 @@ const update = async ({ comment, uuid_user, uuid }) => {
   }
 };
 
+// const deleteComment = async ({ uuid }) => {
+//   console.log("deleteService");
+//   const findedComment = await Comment.findOne({ uuid });
+//   try {
+//     if (!findedComment) throw error;
+//     // if (findedComment.uuid_user !== uuid_user) throw error
+//     await Comment.deleteOne({ uuid });
+//     return { success: "Commentaire supprimé" };
+//   } catch (error) {
+//     return { error };
+//   }
+// };
+
+const deleteComment = async (uuid_user, uuid) => {
+  console.log("uuid", uuid, "uuid_user", uuid_user);
+  try {
+    const findedComment = await Comment.findOne({ uuid });
+    console.log(findedComment);
+    if (!findedComment) {
+      throw new Error("Comment not found");
+    }
+    if (findedComment.uuid_user !== uuid_user) {
+      throw new Error("Not authorized");
+    }
+    await Comment.deleteOne({ uuid });
+    return { message: "Comment deleted" };
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   create,
   getAll,
   update,
   getByProjectId,
+  deleteComment,
 };

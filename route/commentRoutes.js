@@ -10,6 +10,8 @@ router.get("/", controller.comment.getAll);
 
 router.put("/comment", DTO.comment.update, controller.comment.update);
 
-router.get("/comment/:id", controller.comment.getByProjectId);
+router.get("/comment/:uuid", controller.comment.getByProjectId);
+
+router.delete("/comment/:uuid", controller.comment.deleteComment);
 
 module.exports = router;
