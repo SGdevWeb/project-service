@@ -33,7 +33,19 @@ const isOwner = async (uuid_user, uuid_project) => {
   }
 };
 
+const getByUser = async (uuid_user) => {
+  try {
+      let roleProject = await roleProjectModel.find({uuid_user}).select({uuid_project: 1, _id: 0});
+      roleProject = roleProject.map(rP => rP.uuid_project);
+      if (roleProject == null) throw new Error("Membre de projet non trouver");
+      return { success: roleProject };
+  } catch (error) {
+      return { error };
+  }
+};
+
 module.exports = {
   create,
   isOwner,
+  getByUser,
 };
