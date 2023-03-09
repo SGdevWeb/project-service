@@ -8,6 +8,8 @@ const projectSchema = mongoose.Schema({
     date_end: { type: Date },
     description: String,
     // type : { type: mongoose.Schema.Types.String, ref: 'type' }
+},{
+    timestamps: true
 });
 
 //nom de la collection  = nom du model+s exemple nom du model : project, nom de la collections : projects
