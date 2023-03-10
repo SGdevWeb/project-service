@@ -13,7 +13,7 @@ const create = async (req, res) => {
       );
     const newProject = await service.project.create({
       ...req.body,
-      uuid_user: req.body.user.user,
+      uuid_user: req.body.uuid_user,
     });
     if (newProject.error) throw newProject.error;
     return res.status(201).json({ success: newProject.success });
