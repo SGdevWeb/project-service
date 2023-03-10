@@ -13,7 +13,7 @@ const create = async (req, res) => {
       );
     const newProject = await service.project.create({
       ...req.body,
-      uuid_user: req.body.user.userId,
+      uuid_user: req.body.uuid_user,
     });
     if (newProject.error) throw newProject.error;
     return res.status(201).json({ success: newProject.success });
@@ -44,7 +44,28 @@ const get = async (req, res) => {
     if (project.error) throw project.error;
     return res.status(201).json({ success: project.success });
   } catch (error) {
-    console.log(error);
+    res.status(400).json(error.message);
+  }
+};
+
+const getAll = async (_req, res) => {
+  try {
+    const projects = await service.project.getAll();
+    if (projects.error) throw projects.error;
+    return res.status(201).json({ success: projects.success });
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
+const getByUser = async (req, res) => {
+  try {
+    const uuid_projects = await service.roleProject.getByUser(req.params.uuid);
+    if (uuid_projects.error) throw uuid_projects.error;
+    const projects = await service.project.getMultiple(uuid_projects.success);
+    if (projects.error) throw projects.error;
+    return res.status(201).json({ success: projects.success });
+  } catch (error) {
     res.status(400).json(error.message);
   }
 };
@@ -53,4 +74,6 @@ module.exports = {
   create,
   update,
   get,
+  getAll,
+  getByUser,
 };

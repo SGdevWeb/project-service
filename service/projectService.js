@@ -73,10 +73,36 @@ const get = async (uuid) => {
     } catch (error) {
         return { error };
     }
-}
+};
+
+const getAll = async () => {
+  try {
+      const project = await projectModel.find().select({ _id:0, __v:0 });;
+      if (project == null) throw new Error("Projets introuvable");
+      return { success: project };
+  } catch (error) {
+      return { error };
+  }
+};
+
+const getMultiple = async (uuid_projects) => {
+  try {
+      const project = await projectModel.find({ uuid: { $in: uuid_projects} }).select({ _id:0, __v:0 });
+      if (project == null) throw new Error("Projets introuvable");
+      return { success: project };
+  } catch (error) {
+      return { error };
+  }
+};
+
+
+
+
 
 module.exports = {
     create,
     update,
     get,
+    getAll,
+    getMultiple,
 };
