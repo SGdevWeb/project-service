@@ -20,7 +20,7 @@ const update = (req, res, next) => {
     date_start: Joi.date().required().iso(),
     date_end: Joi.date().iso(),
     description: Joi.string().required().max(255),
-    user: Joi.object().required(),
+    uuid_user: Joi.string().guid({ version: "uuidv4" }).required(),
   });
 
   const joiParams = Joi.object({
