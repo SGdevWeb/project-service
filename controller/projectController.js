@@ -1,16 +1,22 @@
 const service = require("../service/services");
 
+const checkDate = (dateStart, dateEnd) => {
+  if (dateEnd && new Date(dateEnd) < new Date(dateStart)) {
+    throw new Error(
+      "Il est important de veiller à ce que la date de début du projet soit antérieure à la date de fin."
+    );
+  }
+  if (Date.now() < new Date(dateStart)) {
+    throw new Error(
+      "Il est essentiel que la date de début du projet soit antérieure a la date d'aujourd'hui."
+    );
+  }
+}
+
 const create = async (req, res) => {
   try {
     const { date_start, date_end } = req.body;
-    if (date_end && new Date(date_end) < new Date(date_start))
-      throw new Error(
-        "Il est important de veiller à ce que la date de début du projet soit antérieure à la date de fin."
-      );
-    if (Date.now() < new Date(date_start))
-      throw new Error(
-        "Il est essentiel que la date de début du projet soit antérieure a la date d'aujourd'hui."
-      );
+    checkDate(date_start, date_end);
     const newProject = await service.project.create({
       ...req.body,
       uuid_user: req.body.uuid_user,
@@ -27,10 +33,12 @@ const update = async (req, res) => {
   const uuid_user = req.body.uuid_user;
   const data = req.body;
   try {
+    const { date_start, date_end } = req.body;
+    checkDate(date_start, date_end);
     const isOwner = await service.roleProject.isOwner(uuid_user, uuid_project);
     if (isOwner.error) throw isOwner.error;
     if (isOwner.success === false)
-      return res.status(401).json({ message: "!owner" });
+      return res.status(401).json({ message: "Vous n'êtes pas owner du projet" });
     const result = await service.project.update(uuid_project, data);
     res.status(200).json(result);
   } catch (error) {
