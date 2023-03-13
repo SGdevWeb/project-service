@@ -24,7 +24,7 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   const uuid_project = req.params.uuid;
-  const uuid_user = req.body.user.userId;
+  const uuid_user = req.body.uuid_user;
   const data = req.body;
   try {
     const isOwner = await service.roleProject.isOwner(uuid_user, uuid_project);
