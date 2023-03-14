@@ -1,4 +1,5 @@
 const service = require("../service/services");
+const axios = require('axios');
 
 const checkDate = (dateStart, dateEnd) => {
   if (dateEnd && new Date(dateEnd) < new Date(dateStart)) {
@@ -50,9 +51,19 @@ const get = async (req, res) => {
   try {
     const project = await service.project.get(req.params.uuid);
     if (project.error) throw project.error;
+
+      console.log(project.success?.uuid)
+      const projectlikes = await axios.get(
+        `${process.env.LIKE_SERVICE_ADDRESS}/api/projectlikes`,
+        { uuid_project: project.success.uuid }
+      );
+      console.log(projectlikes)
+      if (projectlikes.error) throw projectlikes.error
+      project.countlikes = projectlikes;
+
     return res.status(201).json({ success: project.success });
   } catch (error) {
-    res.status(400).json(error.message);
+    //res.status(400).json(error.message);
   }
 };
 
