@@ -7,7 +7,7 @@ const create = (req, res, next) => {
     name: Joi.string().required().min(3).max(50),
     date_start: Joi.date().required().iso(),
     date_end: Joi.date().iso(),
-    description: Joi.string().required().max(5000),
+    description: Joi.string().required().min(100).max(5000),
     uuid_user: Joi.string().guid({ version: "uuidv4" }).required(),
     //type : Joi.string().required().length(32),
   });
