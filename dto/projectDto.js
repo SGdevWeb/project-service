@@ -9,7 +9,6 @@ const create = (req, res, next) => {
     date_end: Joi.date().iso(),
     description: Joi.string().required().max(5000),
     uuid_user: Joi.string().guid({ version: "uuidv4" }).required(),
-    //type : Joi.string().required().length(32),
   });
   schemaValidator(req, joiCreateProject, next);
 };
@@ -19,7 +18,7 @@ const update = (req, res, next) => {
     name: Joi.string().required().min(3).max(50),
     date_start: Joi.date().required().iso(),
     date_end: Joi.date().iso(),
-    description: Joi.string().required().max(255),
+    description: Joi.string().required().max(5000),
     uuid_user: Joi.string().guid({ version: "uuidv4" }).required(),
   });
 
