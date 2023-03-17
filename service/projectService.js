@@ -67,7 +67,7 @@ const update = async (uuid, data) => {
 
 const get = async (uuid) => {
     try {
-        const project = await projectModel.findOne({uuid:uuid});
+        const project = await projectModel.findOne({uuid:uuid}).select({ _id:0, __v:0 });
         if (project == null) throw new Error("Projet introuvable");
         return { success: project };
     } catch (error) {
