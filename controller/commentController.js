@@ -1,5 +1,4 @@
 const services = require("../service/services");
-const Comment = require("../model/commentModel");
 
 const create = async (req, res) => {
   // console.log("commentController create", req.body);
@@ -49,44 +48,14 @@ const update = async (req, res) => {
   }
 };
 
-// const deleteComment = async (req, res) => {
-//   const deletedComment = await services.comment.deleteComment(req.params);
-//   console.log("deletedComment", deleteComment);
-//   try {
-//     if (deletedComment.error) throw deletedComment.error;
-//     return res.status(200).json(deleteComment);
-//   } catch (error) {
-//     return res.status(500).json(error);
-//   }
-// };
-
-// const deleteComment = (req, res, next) => {
-//   Comment.findOne({ uuid: req.params.uuid })
-//     .then((comment) => {
-//       if (sauce.userId != req.auth.userId) {
-//           res.status(403).json({ message: 'non autorisé' });
-//       } else {
-//       Comment.deleteOne({ uuid: req.params.uuid })
-//         .then(() => {
-//           res.status(200).json({ message: "commentaire supprimé !" });
-//         })
-//         .catch((error) => res.status(401).json({ error }));
-//     }})
-//     .catch((error) => {
-//       res.status(500).json({ error });
-//     });
-// };
-
 const deleteComment = async (req, res, next) => {
-  console.log(req.params);
-  console.log("body", req.body);
+  // console.log(req.params);
+  // console.log("body", req.body);
 
   try {
     const uuid_user = req.body.uuid_user;
     const uuid = req.params.uuid;
-    console.log("uuid", uuid, "uuid_user", uuid_user);
     const response = await services.comment.deleteComment(uuid_user, uuid);
-    console.log("response deleteComment controller", response);
     return res.status(200).json(response);
   } catch (error) {
     if (
