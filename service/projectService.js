@@ -75,9 +75,13 @@ const get = async (uuid) => {
     }
 };
 
-const getAll = async () => {
+const getAll = async (blacklistIds) => {
   try {
-      const project = await projectModel.find().select({ _id:0, __v:0 });;
+      const project = await projectModel
+        .find({uuid: {$nin : blacklistIds}})
+        .sort({createdAt: -1})
+        .limit(10)
+        .select({ _id:0, __v:0 });;
       if (project == null) throw new Error("Projets introuvable");
       return { success: project };
   } catch (error) {

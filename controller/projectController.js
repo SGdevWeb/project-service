@@ -56,9 +56,9 @@ const get = async (req, res) => {
   }
 };
 
-const getAll = async (_req, res) => {
+const getAll = async (req, res) => {
   try {
-    const projects = await service.project.getAll();
+    const projects = await service.project.getAll(req.body.blacklistIds);
     if (projects.error) throw projects.error;
     return res.status(201).json({ success: projects.success });
   } catch (error) {
