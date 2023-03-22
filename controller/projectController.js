@@ -78,10 +78,27 @@ const getByUser = async (req, res) => {
   }
 };
 
+const remove = async (req, res) => {
+  try {
+    const {uuid: uuid_project} = req.params;
+    const {uuid_user} = req.body;
+    const isOwner = await service.roleProject.isOwner(uuid_user, uuid_project);
+    if (isOwner.error) throw isOwner.error;
+    if (isOwner.success === false)
+      return res.status(401).json({ message: "Vous n'êtes pas owner du projet" });
+    const result = await service.project.remove(uuid_project);
+    if (result.error) throw result.error;
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
 module.exports = {
   create,
   update,
   get,
   getAll,
   getByUser,
+  remove,
 };

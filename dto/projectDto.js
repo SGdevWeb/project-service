@@ -60,11 +60,34 @@ const getAll = (req, res, next) => {
   if (paramsError) {
       return res.status(400).json({ error: paramsError.details[0].message });
   }
+  next();
 }
+
+const remove = (req, res, next) => {
+  const joiBody = Joi.object({
+    uuid_user: Joi.string().guid({ version: "uuidv4" }),
+  });
+  
+  const { error: bodyError } = joiBody.validate(req.body);
+  if (bodyError) {
+      return res.status(400).json({ error: bodyError.details[0].message });
+  }
+
+  const joiParams = Joi.object({
+    uuid: Joi.string().guid({ version: "uuidv4" }),
+  });
+
+  const { error: paramsError } = joiParams.validate(req.params);
+  if (paramsError) {
+      return res.status(400).json({ error: paramsError.details[0].message });
+  }
+  next();
+};
 
 module.exports = {
     create,
     update,
     get,
     getAll,
+    remove,
 }

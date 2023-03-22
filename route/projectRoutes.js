@@ -13,5 +13,6 @@ router.put('/update/:uuid', DTO.project.update, Controller.project.update);
 router.post('/', Controller.project.getAll);
 router.get('/:uuid', DTO.project.get, Controller.project.get);
 router.get('/user/:uuid', DTO.project.get, Controller.project.getByUser)
+router.post("/:uuid", DTO.project.remove , Controller.project.remove);
 
 module.exports = router;

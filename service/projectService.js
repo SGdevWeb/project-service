@@ -99,9 +99,15 @@ const getMultiple = async (uuid_projects) => {
   }
 };
 
-
-
-
+const remove = async (uuid_projects) => {
+  try {
+    const project = await projectModel.findOneAndDelete({ uuid: uuid_projects });
+    if (!project) throw new Error("Projet introuvable");
+    return { success: project };
+  } catch (error) {
+    return { error };
+  }
+}
 
 module.exports = {
     create,
@@ -109,4 +115,5 @@ module.exports = {
     get,
     getAll,
     getMultiple,
+    remove,
 };
