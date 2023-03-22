@@ -51,8 +51,20 @@ const get = (req, res, next) => {
     next();
 }
 
+const getAll = (req, res, next) => {
+  const joiParams = Joi.object({
+    blacklistIds: Joi.array().items(Joi.string().guid({ version: "uuidv4" })),
+  });
+
+  const { error: paramsError } = joiParams.validate(req.body);
+  if (paramsError) {
+      return res.status(400).json({ error: paramsError.details[0].message });
+  }
+}
+
 module.exports = {
     create,
     update,
     get,
+    getAll,
 }
