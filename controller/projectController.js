@@ -48,8 +48,23 @@ const update = async (req, res) => {
 
 const get = async (req, res) => {
   try {
-    const project = await service.project.get(req.params.uuid);
+    let project = await service.project.get(req.params.uuid);
     if (project.error) throw project.error;
+    try {
+      const projectlikes = await axios.post(
+        `${process.env.LIKE_SERVICE_ADDRESS}/api/projectlikes`,
+        { uuid_project: req.params.uuid }
+      ).catch((err) => {
+        console.log(err)
+      });
+      if (!projectlikes.error) {
+        
+        return res.status(201).json({ success: project.success, countLikes: parseInt(projectlikes.data.count) });
+      } else {
+        //throw projectlikes.error
+      }
+    } catch (error) {
+    }
     return res.status(201).json({ success: project.success });
   } catch (error) {
     res.status(400).json(error.message);
