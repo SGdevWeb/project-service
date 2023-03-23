@@ -85,7 +85,7 @@ const remove = async (req, res) => {
     const isOwner = await service.roleProject.isOwner(uuid_user, uuid_project);
     if (isOwner.error) throw isOwner.error;
     if (isOwner.success === false)
-      return res.status(401).json({ message: "Vous n'êtes pas owner du projet" });
+      return res.status(401).json({ message: "Vous n'êtes pas proprietaire du projet" });
     const result = await service.project.remove(uuid_project);
     if (result.error) throw result.error;
     res.status(200).json(result);
