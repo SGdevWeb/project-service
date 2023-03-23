@@ -1,5 +1,4 @@
 const service = require("../service/services");
-const axios = require('axios');
 
 const checkDate = (dateStart, dateEnd) => {
   if (dateEnd && new Date(dateEnd) < new Date(dateStart)) {
