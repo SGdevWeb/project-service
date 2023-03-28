@@ -1,6 +1,12 @@
 const service = require("../service/services");
 
 const checkDate = (dateStart, dateEnd) => {
+  if (new Date(0) > new Date(dateStart)) {
+    setError(
+      "La date de creation du projet ne peut pas être antérieure à 1970."
+    );
+    return;
+  }
   if (dateEnd && new Date(dateEnd) < new Date(dateStart)) {
     throw new Error(
       "Il est important de veiller à ce que la date de début du projet soit antérieure à la date de fin."
