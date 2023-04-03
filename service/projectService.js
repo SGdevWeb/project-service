@@ -9,6 +9,7 @@ const create = async ({
   date_end,
   description,
   uuid_user,
+  type,
 }) => {
 
     const newProject = new projectModel({
@@ -17,6 +18,7 @@ const create = async ({
         date_start,
         date_end,
         description,
+        type,
     });
 
     const newRoleProject = new roleProjectModel({
@@ -46,6 +48,7 @@ const update = async (uuid, data) => {
     project.date_start = data.date_start || project.date_start;
     project.date_end = data.date_end || project.date_end;
     project.description = data.description || project.description;
+    project.type = data.type || project.type;
 
     const roleProject = await roleProjectModel.findOne({
       uuid_project: project.uuid,
@@ -67,7 +70,10 @@ const update = async (uuid, data) => {
 
 const get = async (uuid) => {
     try {
-        const project = await projectModel.findOne({uuid:uuid}).select({ _id:0, __v:0 });
+        const project = await projectModel
+          .findOne({uuid:uuid})
+          .select({ _id:0, __v:0 })
+          .populate("type");
         if (project == null) throw new Error("Projet introuvable");
         return { success: project };
     } catch (error) {
@@ -81,7 +87,8 @@ const getAll = async (blacklistIds) => {
         .find({uuid: {$nin : blacklistIds}})
         .sort({createdAt: -1})
         .limit(10)
-        .select({ _id:0, __v:0 });;
+        .select({ _id:0, __v:0 })
+        .populate("type");
       if (project == null) throw new Error("Projets introuvable");
       return { success: project };
   } catch (error) {

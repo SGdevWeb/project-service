@@ -7,7 +7,7 @@ const projectSchema = mongoose.Schema({
     date_start: { type: Date },
     date_end: { type: Date },
     description: String,
-    // type : { type: mongoose.Schema.Types.String, ref: 'type' }
+    type : { type: mongoose.Schema.Types.ObjectId, ref: 'type' }
 },{
     timestamps: true
 });
