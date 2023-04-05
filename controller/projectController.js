@@ -24,9 +24,11 @@ const create = async (req, res) => {
   try {
     const { date_start, date_end } = req.body;
     checkDate(date_start, date_end);
+    const type = await service.type.getByUuid(req.body.uuid_type);
     const newProject = await service.project.create({
       ...req.body,
       uuid_user: req.body.uuid_user,
+      type: type._id,
     });
     if (newProject.error) throw newProject.error;
     return res.status(201).json({ success: newProject.success });
@@ -42,6 +44,7 @@ const update = async (req, res) => {
   try {
     const { date_start, date_end } = req.body;
     checkDate(date_start, date_end);
+    data.type = await service.type.getByUuid(data.uuid_type);
     const isOwner = await service.roleProject.isOwner(uuid_user, uuid_project);
     if (isOwner.error) throw isOwner.error;
     if (isOwner.success === false)
@@ -49,6 +52,7 @@ const update = async (req, res) => {
     const result = await service.project.update(uuid_project, data);
     res.status(200).json(result);
   } catch (error) {
+    console.log(error);
     res.status(400).json(error);
   }
 };
