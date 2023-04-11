@@ -98,7 +98,7 @@ const getAll = async (blacklistIds) => {
 
 const getMultiple = async (uuid_projects) => {
   try {
-      const project = await projectModel.find({ uuid: { $in: uuid_projects} }).select({ _id:0, __v:0 });
+      const project = await projectModel.find({ uuid: { $in: uuid_projects} }).select({ _id:0, __v:0 }).populate("type");;
       if (project == null) throw new Error("Projets introuvable");
       return { success: project };
   } catch (error) {
